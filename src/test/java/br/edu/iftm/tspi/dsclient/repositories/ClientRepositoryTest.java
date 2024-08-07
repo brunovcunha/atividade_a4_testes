@@ -153,4 +153,44 @@ public class ClientRepositoryTest {
         assertEquals(1, clients.size());
     }
 
+    // Lucas Azevedo
+    @Test
+    public void testFindByIncomeGreaterThan() {
+        Client client1 = new Client(1L, "Lázaro Ramos", "10619244881", 2500.0, Instant.parse("1996-12-23T07:00:00Z"), 2);
+        Client client2 = new Client(2L, "Gilberto Gil", "10419344882", 8000.0, Instant.parse("1949-05-05T07:00:00Z"), 4);
+
+        repository.saveAll(List.of(client1, client2));
+
+        List<Client> clients = repository.findByIncomeGreaterThan(3000.0);
+        assertEquals(1, clients.size());
+        assertEquals("Gilberto Gil", clients.get(0).getName());
+    }
+
+    // Lucas Azevedo  
+    @Test
+    public void testFindByIncomeLessThan() {
+        Client client1 = new Client(1L, "Lázaro Ramos", "10619244881", 2500.0, Instant.parse("1996-12-23T07:00:00Z"), 2);
+        Client client2 = new Client(2L, "Gilberto Gil", "10419344882", 8000.0, Instant.parse("1949-05-05T07:00:00Z"), 4);
+
+        repository.saveAll(List.of(client1, client2));
+
+        List<Client> clients = repository.findByIncomeLessThan(5000.0);
+        assertEquals(1, clients.size());
+        assertEquals("Lázaro Ramos", clients.get(0).getName());
+    }
+
+    // Lucas Azevedo
+    @Test
+    public void testFindByIncomeBetween() {
+        Client client1 = new Client(1L, "Lázaro Ramos", "10619244881", 2500.0, Instant.parse("1996-12-23T07:00:00Z"), 2);
+        Client client2 = new Client(2L, "Gilberto Gil", "10419344882", 8000.0, Instant.parse("1949-05-05T07:00:00Z"), 4);
+        Client client3 = new Client(3L, "Djamila Ribeiro", "10619244884", 4500.0, Instant.parse("1975-11-10T07:00:00Z"), 1);
+
+        repository.saveAll(List.of(client1, client2, client3));
+
+        List<Client> clients = repository.findByIncomeBetween(2000.0, 5000.0);
+        assertEquals(2, clients.size());
+        assertEquals("Lázaro Ramos", clients.get(0).getName());
+        assertEquals("Djamila Ribeiro", clients.get(1).getName());
+    }
 }

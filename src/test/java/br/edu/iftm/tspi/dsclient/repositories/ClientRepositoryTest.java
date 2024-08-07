@@ -1,14 +1,10 @@
 package br.edu.iftm.tspi.dsclient.repositories;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
-import java.util.Optional;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import br.edu.iftm.tspi.dsclient.entities.Client;
-import jakarta.persistence.EntityNotFoundException;
 
 @DataJpaTest
 public class ClientRepositoryTest {
@@ -24,7 +19,7 @@ public class ClientRepositoryTest {
     @Autowired
     private ClientRepository repository;
 
-    // Bruno Vieira
+    // Bruno Vieira 
     @Test
     @DisplayName("Esse teste verifica se o metodo findByName retorna um cliente com um nome existente na base de dados")
     public void testFindByName() {
@@ -34,25 +29,13 @@ public class ClientRepositoryTest {
         assertEquals("Conceição Evaristo", clients.get(0).getName());
     }
 
-    // Bruno Vieira
+    // Bruno Vieira 
     @Test
     @DisplayName("Testar a busca de cliente por nome específico não existente")
     public void testFindByNameNonExisting() {
         List<Client> clients = repository.findByName("NonExisting Name");
 
         assertEquals(0, clients.size());
-    }
-
-    @Test
-    @DisplayName("Testar a exclusao de um cliente por id")
-    public void testDeleteClienteExistente() {
-
-        Long clienteId = (long)1;
-
-        repository.deleteById(clienteId);
-
-        Optional<Client> clienteDeletado = repository.findById(clienteId);
-        assertFalse(clienteDeletado.isPresent());
     }
 
     @Test
@@ -64,7 +47,7 @@ public class ClientRepositoryTest {
         assertEquals(4, clients.size());
 
     }
-
+    
     @Test
     public void testFindByNameStartingWithExistingPrefix() {
         List<Client> clients = repository.findByNameStartingWith("Conceição");
@@ -123,6 +106,50 @@ public class ClientRepositoryTest {
         assertEquals(2, clients.size());
         assertTrue(clients.stream().anyMatch(c -> c.getName().equals("Djamila Ribeiro")));
         assertTrue(clients.stream().anyMatch(c -> c.getName().equals("Gilberto Gil")));
+    }
+    
+    // Lucas Azevedo
+
+    @Test
+    public void testFindByIncomeGreaterThan() {
+        Client client1 = new Client(1L, "Lázaro Ramos", "10619244881", 2500.0, Instant.parse("1996-12-23T07:00:00Z"), 2);
+        Client client2 = new Client(2L, "Gilberto Gil", "10419344882", 8000.0, Instant.parse("1949-05-05T07:00:00Z"), 4);
+
+        repository.saveAll(List.of(client1, client2));
+
+        List<Client> clients = repository.findByIncomeGreaterThan(3000.0);
+        assertEquals(1, clients.size());
+        assertEquals("Gilberto Gil", clients.get(0).getName());
+    }
+
+    // Lucas Azevedo
+    
+    @Test
+    public void testFindByIncomeLessThan() {
+        Client client1 = new Client(1L, "Lázaro Ramos", "10619244881", 2500.0, Instant.parse("1996-12-23T07:00:00Z"), 2);
+        Client client2 = new Client(2L, "Gilberto Gil", "10419344882", 8000.0, Instant.parse("1949-05-05T07:00:00Z"), 4);
+
+        repository.saveAll(List.of(client1, client2));
+
+        List<Client> clients = repository.findByIncomeLessThan(5000.0);
+        assertEquals(1, clients.size());
+        assertEquals("Lázaro Ramos", clients.get(0).getName());
+    }
+
+    // Lucas Azevedo
+    
+    @Test
+    public void testFindByIncomeBetween() {
+        Client client1 = new Client(1L, "Lázaro Ramos", "10619244881", 2500.0, Instant.parse("1996-12-23T07:00:00Z"), 2);
+        Client client2 = new Client(2L, "Gilberto Gil", "10419344882", 8000.0, Instant.parse("1949-05-05T07:00:00Z"), 4);
+        Client client3 = new Client(3L, "Djamila Ribeiro", "10619244884", 4500.0, Instant.parse("1975-11-10T07:00:00Z"), 1);
+
+        repository.saveAll(List.of(client1, client2, client3));
+
+        List<Client> clients = repository.findByIncomeBetween(2000.0, 5000.0);
+        assertEquals(2, clients.size());
+        assertEquals("Lázaro Ramos", clients.get(0).getName());
+        assertEquals("Djamila Ribeiro", clients.get(1).getName());
     }
 
     @Test

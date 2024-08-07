@@ -66,6 +66,7 @@ public class ClientRepositoryTest {
         assertEquals(12, clientes.size());
     }
 
+    // Carlos Rangel
     @Test
     public void testFindClientByDateBetween() {
         Instant dataInicio = Instant.parse("1996-12-23T07:00:00Z");
@@ -73,7 +74,42 @@ public class ClientRepositoryTest {
         List<Client> clients = repository.findClientByBirthDateBetween(dataInicio, dataTermino);
 
         assertEquals(4, clients.size());
+    }
 
+    // Carlos Rangel
+    @Test
+    public void testFindByChildrenGreaterThanEqual() {
+        List<Client> clients = repository.findByChildrenGreaterThanEqual(2);
+
+        assertNotNull(clients);
+        assertEquals(5, clients.size());
+        assertTrue(clients.stream().anyMatch(c -> c.getName().equals("Conceição Evaristo")));
+    }
+
+    // Carlos Rangel
+    @Test
+    public void testFindByCpfStartingWith() {
+        List<Client> clients = repository.findByCpfStartingWith("106");
+
+        assertNotNull(clients);
+        assertEquals(4, clients.size());
+        assertTrue(clients.stream().anyMatch(c -> c.getName().equals("Lázaro Ramos")));
+    }
+
+    // Carlos Rangel
+    @Test
+    public void testFindClientsWithDuplicatedNames() {
+        Client client1 = new Client(null, "Naruto Uzumaki", "10619244881", 3000.0,
+                Instant.parse("1980-01-01T07:00:00Z"), 2);
+        Client client2 = new Client(null, "Naruto Uzumaki", "10619244882", 4000.0,
+                Instant.parse("1990-01-01T07:00:00Z"), 1);
+        repository.saveAll(List.of(client1, client2));
+
+        List<Client> clients = repository.findClientsWithDuplicatedNames();
+
+        assertNotNull(clients);
+        assertEquals(2, clients.size());
+        assertTrue(clients.stream().allMatch(c -> c.getName().equals("Naruto Uzumaki")));
     }
 
     @Test

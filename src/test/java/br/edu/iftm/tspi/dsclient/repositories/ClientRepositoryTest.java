@@ -1,11 +1,14 @@
 package br.edu.iftm.tspi.dsclient.repositories;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import br.edu.iftm.tspi.dsclient.entities.Client;
+import jakarta.persistence.EntityNotFoundException;
 
 @DataJpaTest
 public class ClientRepositoryTest {
@@ -20,7 +24,7 @@ public class ClientRepositoryTest {
     @Autowired
     private ClientRepository repository;
 
-    // Bruno Vieira 
+    // Bruno Vieira
     @Test
     @DisplayName("Esse teste verifica se o metodo findByName retorna um cliente com um nome existente na base de dados")
     public void testFindByName() {
@@ -30,13 +34,25 @@ public class ClientRepositoryTest {
         assertEquals("Conceição Evaristo", clients.get(0).getName());
     }
 
-    // Bruno Vieira 
+    // Bruno Vieira
     @Test
     @DisplayName("Testar a busca de cliente por nome específico não existente")
     public void testFindByNameNonExisting() {
         List<Client> clients = repository.findByName("NonExisting Name");
 
         assertEquals(0, clients.size());
+    }
+
+    @Test
+    @DisplayName("Testar a exclusao de um cliente por id")
+    public void testDeleteClienteExistente() {
+
+        Long clienteId = (long)1;
+
+        repository.deleteById(clienteId);
+
+        Optional<Client> clienteDeletado = repository.findById(clienteId);
+        assertFalse(clienteDeletado.isPresent());
     }
 
     @Test
@@ -48,7 +64,7 @@ public class ClientRepositoryTest {
         assertEquals(4, clients.size());
 
     }
-    
+
     @Test
     public void testFindByNameStartingWithExistingPrefix() {
         List<Client> clients = repository.findByNameStartingWith("Conceição");

@@ -3,7 +3,6 @@ package br.edu.iftm.tspi.dsclient.repositories;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.Instant;
@@ -17,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import br.edu.iftm.tspi.dsclient.entities.Client;
-import jakarta.persistence.EntityNotFoundException;
 
 @DataJpaTest
 public class ClientRepositoryTest {
@@ -193,4 +191,46 @@ public class ClientRepositoryTest {
         assertEquals("Lázaro Ramos", clients.get(0).getName());
         assertEquals("Djamila Ribeiro", clients.get(1).getName());
     }
+    
+    // João
+    @Test
+    @DisplayName("Verifica nome existente ignorando a case da consulta.")
+    public void testFindExistingNameIgnoringCase() {
+        List<Client> clients = repository.findByNameContainingIgnoreCase("conceição");
+        assertEquals(1, clients.size());
+        assertEquals("Conceição Evaristo", clients.get(0).getName());
+    }
+
+    // João
+    @Test
+    @DisplayName("Verifica se nomes inexistentes são encontrados com a case ignorada")
+    public void testFindInexistingNameIgnoringCase() {
+        List<Client> clients = repository.findByNameContainingIgnoreCase("joao vitorino");
+        assertEquals(0, clients.size());
+    }
+
+    // João
+    @Test
+    @DisplayName("Verifica a consulta de uma lista com IgnoreCase + Contains")
+    public void testFindListOfExistingNamesIgnoringCase() {
+        List<Client> clients = repository.findByNameContainingIgnoreCase("ra");
+        assertEquals(3, clients.size());
+        assertEquals("Lázaro Ramos", clients.get(0).getName());
+        assertEquals("Jose Saramago", clients.get(1).getName());
+        assertEquals("Yuval Noah Harari", clients.get(2).getName());
+    }
+
+    // João
+    @Test
+    @DisplayName("Verifica a criação de um usuário válido e atribuição de ID automática")
+    public void testCreateNewValidClient() {
+        Client validClient = new Client(null, "João Vitorino", "12345678900", 1500.0,
+                Instant.parse("2005-04-19T00:00:00Z"), 0);
+        Client savedClient = repository.save(validClient);
+        Optional<Client> retrievedClient = repository.findById(13L);
+
+        assertTrue(retrievedClient.isPresent(), "O cliente salvo deve estar presente.");
+        assertEquals(savedClient, retrievedClient.get());
+    }
+
 }

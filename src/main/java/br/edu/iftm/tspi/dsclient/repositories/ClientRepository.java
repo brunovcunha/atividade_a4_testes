@@ -13,7 +13,7 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
 
     List<Client> findClientByBirthDateBetween(Instant dataInicio, Instant dataTermino);
 
-    List<Client> findByNameStartingWith(String prefix); 
+    List<Client> findByNameStartingWith(String prefix);
 
     List<Client> findByNameEndingWith(String suffix);
 
@@ -22,5 +22,7 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
     List<Client> findByIncomeBetween(Double minIncome, Double maxIncome);
 
     List<Client> findByNameContainingIgnoreCase(String name);
+
+    List<Client> findByName(String name);
 
 }

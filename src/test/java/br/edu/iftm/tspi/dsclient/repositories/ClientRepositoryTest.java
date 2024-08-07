@@ -7,6 +7,7 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -18,6 +19,25 @@ public class ClientRepositoryTest {
 
     @Autowired
     private ClientRepository repository;
+
+    // Bruno Vieira 
+    @Test
+    @DisplayName("Esse teste verifica se o metodo findByName retorna um cliente com um nome existente na base de dados")
+    public void testFindByName() {
+        List<Client> clients = repository.findByName("Conceição Evaristo");
+
+        assertEquals(1, clients.size());
+        assertEquals("Conceição Evaristo", clients.get(0).getName());
+    }
+
+    // Bruno Vieira 
+    @Test
+    @DisplayName("Testar a busca de cliente por nome específico não existente")
+    public void testFindByNameNonExisting() {
+        List<Client> clients = repository.findByName("NonExisting Name");
+
+        assertEquals(0, clients.size());
+    }
 
     @Test
     public void testFindClientByDateBetween() {

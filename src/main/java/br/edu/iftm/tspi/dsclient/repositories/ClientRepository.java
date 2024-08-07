@@ -21,4 +21,6 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
 
     List<Client> findByIncomeBetween(Double minIncome, Double maxIncome);
 
+    List<Client> findByName(String name);
+
 }

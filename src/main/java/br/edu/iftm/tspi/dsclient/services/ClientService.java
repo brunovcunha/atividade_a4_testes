@@ -1,8 +1,6 @@
-package com.iftm.client.services;
+package br.edu.iftm.tspi.dsclient.services;
 
 import java.util.Optional;
-
-import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -12,11 +10,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.iftm.client.dto.ClientDTO;
-import com.iftm.client.entities.Client;
-import com.iftm.client.repositories.ClientRepository;
-import com.iftm.client.services.exceptions.DatabaseException;
-import com.iftm.client.services.exceptions.ResourceNotFoundException;
+import br.edu.iftm.tspi.dsclient.dto.ClientDTO;
+import br.edu.iftm.tspi.dsclient.entities.Client;
+import br.edu.iftm.tspi.dsclient.repositories.ClientRepository;
+import br.edu.iftm.tspi.dsclient.services.exceptions.DatabaseException;
+import br.edu.iftm.tspi.dsclient.services.exceptions.ResourceNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class ClientService {
@@ -47,7 +46,7 @@ public class ClientService {
 	@Transactional
 	public ClientDTO update(Long id, ClientDTO dto) {
 		try {
-			Client entity = repository.getOne(id);
+			Client entity = repository.getReferenceById(id);
 			updateData(entity, dto);
 			entity = repository.save(entity);
 			return new ClientDTO(entity);

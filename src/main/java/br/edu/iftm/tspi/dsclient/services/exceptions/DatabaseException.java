@@ -1,4 +1,4 @@
-package com.iftm.client.services.exceptions;
+package br.edu.iftm.tspi.dsclient.services.exceptions;
 
 public class DatabaseException extends RuntimeException {
 	private static final long serialVersionUID = 1L;

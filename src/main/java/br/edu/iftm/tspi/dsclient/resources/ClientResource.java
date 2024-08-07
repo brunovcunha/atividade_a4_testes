@@ -1,4 +1,4 @@
-package com.iftm.client.resources;
+package br.edu.iftm.tspi.dsclient.resources;
 
 import java.net.URI;
 
@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.iftm.client.dto.ClientDTO;
-import com.iftm.client.services.ClientService;
+import br.edu.iftm.tspi.dsclient.dto.ClientDTO;
+import br.edu.iftm.tspi.dsclient.services.ClientService;
 
 @RestController
 @RequestMapping(value = "/clients")

@@ -1,4 +1,4 @@
-package com.iftm.client.resources.exceptions;
+package br.edu.iftm.tspi.dsclient.resources.exceptions;
 
 import java.io.Serializable;
 import java.time.Instant;

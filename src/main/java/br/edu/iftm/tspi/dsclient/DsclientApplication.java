@@ -1,4 +1,4 @@
-package com.iftm.client;
+package br.edu.iftm.tspi.dsclient;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

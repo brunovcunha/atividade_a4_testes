@@ -5,7 +5,7 @@
             "name": "Spring Boot-DsclientApplication<dsclient>",
             "request": "launch",
             "cwd": "${workspaceFolder}",
-            "mainClass": "com.iftm.client.DsclientApplication",
+            "mainClass": "br.edu.iftm.tspi.dsclient.DsclientApplication",
             "projectName": "dsclient",
             "args": "",
             "envFile": "${workspaceFolder}/.env"

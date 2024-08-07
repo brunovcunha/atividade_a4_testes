@@ -1,9 +1,9 @@
-package com.iftm.client.dto;
+package br.edu.iftm.tspi.dsclient.dto;
 
 import java.io.Serializable;
 import java.time.Instant;
 
-import com.iftm.client.entities.Client;
+import br.edu.iftm.tspi.dsclient.entities.Client;
 
 public class ClientDTO implements Serializable {
 	private static final long serialVersionUID = 1L;

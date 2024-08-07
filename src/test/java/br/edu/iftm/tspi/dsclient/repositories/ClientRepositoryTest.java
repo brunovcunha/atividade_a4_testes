@@ -2,6 +2,7 @@ package br.edu.iftm.tspi.dsclient.repositories;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -43,16 +44,28 @@ public class ClientRepositoryTest {
         assertEquals(0, clients.size());
     }
 
+    // Bruno Vieira
     @Test
     @DisplayName("Testar a exclusao de um cliente por id")
     public void testDeleteClienteExistente() {
 
-        Long clienteId = (long)1;
+        Long clienteId = (long) 1;
 
         repository.deleteById(clienteId);
 
         Optional<Client> clienteDeletado = repository.findById(clienteId);
         assertFalse(clienteDeletado.isPresent());
+    }
+
+    // Bruno Vieira
+    @Test
+    @DisplayName("Testa o findAll para retornar todos os clientes que estão na base de dados")
+    public void testFindAll() {
+
+        List<Client> clientes = repository.findAll();
+
+        assertNotNull(clientes);
+        assertEquals(12, clientes.size());
     }
 
     @Test

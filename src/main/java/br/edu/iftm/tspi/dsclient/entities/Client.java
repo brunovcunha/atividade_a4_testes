@@ -8,8 +8,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.ToString;
 
 @Entity
+@ToString
 @Table(name = "tb_client")
 public class Client implements Serializable {
 	private static final long serialVersionUID = 1L;

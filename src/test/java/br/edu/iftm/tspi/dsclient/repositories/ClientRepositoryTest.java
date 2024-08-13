@@ -67,7 +67,7 @@ public class ClientRepositoryTest {
         assertEquals(12, clientes.size());
     }
 
-    // Carlos Rangel
+    // Carlos Rangel L.
     @Test
     public void testFindClientByDateBetween() {
         Instant dataInicio = Instant.parse("1996-12-23T07:00:00Z");

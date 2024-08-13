@@ -23,6 +23,7 @@ public class ClientRepositoryTest {
     @Autowired
     private ClientRepository repository;
 
+    // test
     // Bruno Vieira
     @Test
     @DisplayName("Esse teste verifica se o metodo findByName retorna um cliente com um nome existente na base de dados")
